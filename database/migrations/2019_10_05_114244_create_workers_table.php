@@ -17,11 +17,11 @@ class CreateWorkersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('first_last_name');
-            $table->string('second_last_name');
-            $table->string('sex');
-            $table->string('phone');
-            $table->string('email');
-            $table->timestamp('date_of_birth');
+            $table->string('second_last_name')->nullable();
+            $table->string('sex')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->timestamp('date_of_birth')->nullable();
             $table->timestamps();
         });
     }
