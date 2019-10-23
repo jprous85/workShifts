@@ -20,20 +20,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="container-fluid">
-        <div id="app">
-            <div class="row">
-                <div class="col-sm-2">
-                    @component('.layouts/components/sidebar')@endcomponent
-                </div>
-                <div class="col-sm-10">
-                    @component('.layouts/components/navbar')@endcomponent
-                    <main class="py-4">
-                        @yield('content')
-                    </main>
-                </div>
-            </div>
-        </div>
+<div class="container-fluid">
+    <div id="app">
+        @yield('content')
     </div>
+</div>
 </body>
 </html>
