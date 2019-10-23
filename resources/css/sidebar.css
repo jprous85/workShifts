@@ -1,7 +1,6 @@
 .sidebar{
     height: 100vh;
-    width: 170px;
-    border-right: 1px solid black;
+    background-color: white;
 }
 
 .sidebar-item {
@@ -11,19 +10,43 @@
 
 .sidebar-title {
     text-align: center;
+
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+
+
+}
+.sidebar-title a:hover {
+    text-decoration: none;
+    color: #fff;
 }
 
 .sidebar-title a {
     text-decoration: none;
-    font-size: 2em;
+    font-size: 1.5em;
+    color: #ffffff;
+    font-weight: bold;
+    font-family: "Noto Mono";
+}
+
+.sidebar-item {
+    text-decoration: none;
     color: #386771;
 }
 
-.sidebar-item  a {
+.sidebar-item:hover {
     text-decoration: none;
-    color: coral;
+    color: #ffffff;
+
+    background-image: radial-gradient( circle 994px at 0.2% 51.2%,  rgba(61,138,255,1) 0%, rgba(0,255,39,1) 100.2% );
+
 }
 
-.sidebar-item  a:hover {
+.link-sidebar:hover {
     text-decoration: none;
+}
+
+.separator {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
 }
