@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="sidebar-title p-3">
-        <a class="" href="{{ url('/') }}">
+        <a id="title-sidebar" href="{{ url('/') }}">
             {{ 'WorkShifts' }}
         </a>
     </div>
@@ -8,29 +8,25 @@
     <a href="" class="link-sidebar">
         <div class="sidebar-item p-3">
             <i class="fas fa-clinic-medical"></i>
-            &nbsp;
-            {{ trans('service') }}
+            <span class="text-sidebar-item ml-2">{{ trans('service') }}</span>
         </div>
     </a>
     <a href="" class="link-sidebar">
         <div class="sidebar-item p-3">
             <i class="fas fa-clock"></i>
-            &nbsp;
-            {{ trans('shedules') }}
+            <span class="text-sidebar-item ml-2">{{ trans('shedules') }}</span>
         </div>
     </a>
     <a href="" class="link-sidebar">
         <div class="sidebar-item p-3">
             <i class="fas fa-map-marked-alt"></i>
-            &nbsp;
-            {{ trans('workplace') }}
+            <span class="text-sidebar-item ml-2">{{ trans('workplace') }}</span>
         </div>
     </a>
     <a href="" class="link-sidebar">
         <div class="sidebar-item separator p-3">
             <i class="fas fa-user-friends"></i>
-            &nbsp;
-            {{ trans('workers') }}
+            <span class="text-sidebar-item ml-2">{{ trans('workers') }}</span>
         </div>
     </a>
 </div>
