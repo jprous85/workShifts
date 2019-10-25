@@ -4,8 +4,13 @@
             {{ 'WorkShifts' }}
         </a>
     </div>
-
-    <a href="" class="link-sidebar">
+    <a href="{{ route('company') }}" class="link-sidebar">
+        <div class="sidebar-item p-3">
+            <i class="fas fa-building"></i>
+            <span class="text-sidebar-item ml-2">{{ trans('company') }}</span>
+        </div>
+    </a>
+    <a href="{{ route('service') }}" class="link-sidebar">
         <div class="sidebar-item p-3">
             <i class="fas fa-clinic-medical"></i>
             <span class="text-sidebar-item ml-2">{{ trans('service') }}</span>

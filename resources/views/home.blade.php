@@ -8,8 +8,10 @@
             @component('layouts/components/navbar')@endcomponent
 
             <div class="container">
-                <div class="row justify-content-center">
-                    @yield('body')
+                <div class="row">
+                    <div class="col-md-12">
+                        @yield('body')
+                    </div>
                 </div>
             </div>
         </div>

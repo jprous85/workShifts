@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('1234'),
-            'token' => str::random(60),
+            'api_token' => str::random(60),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
