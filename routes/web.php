@@ -16,8 +16,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/company', 'CompanyController@index')->name('company');
-    Route::get('/service', 'ServiceController@index')->name('service');
-    Route::get('/shedule', 'SheduleController@index')->name('shedule');
-    Route::get('/workplace', 'WorkplaceController@index')->name('workplace');
+    Route::get('/company', 'CompanyController@view')->name('company');
+    Route::get('/service', 'ServiceController@view')->name('service');
+    Route::get('/shedule', 'SheduleController@view')->name('shedule');
+    Route::get('/workplace', 'WorkplaceController@view')->name('workplace');
 });

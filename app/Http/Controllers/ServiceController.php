@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ServiceController extends Controller
 {
@@ -12,9 +13,19 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function view()
+    {
+        return view('service');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        //
+
     }
 
     /**
