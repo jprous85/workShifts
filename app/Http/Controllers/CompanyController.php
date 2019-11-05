@@ -25,7 +25,7 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -33,12 +33,12 @@ class CompanyController extends Controller
         return new JsonResponse([
             'request' => $request->pages,
             'paginator' => [
-                'total'         => $company->total(),
-                'current_page'  => $company->currentPage(),
-                'per_page'      => $company->perPage(),
-                'last_page'     => $company->lastPage(),
-                'from'          => $company->firstItem(),
-                'to'            => $company->lastItem(),
+                'total' => $company->total(),
+                'current_page' => $company->currentPage(),
+                'per_page' => $company->perPage(),
+                'last_page' => $company->lastPage(),
+                'from' => $company->firstItem(),
+                'to' => $company->lastItem(),
 
             ],
             'company' => $company
@@ -58,8 +58,8 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
@@ -74,7 +74,7 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Company  $company
+     * @param \App\Company $company
      * @return \Illuminate\Http\Response
      */
     public function show(Company $company)
@@ -85,7 +85,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Company  $company
+     * @param \App\Company $company
      * @return \Illuminate\Http\Response
      */
     public function edit(Company $company)
@@ -96,19 +96,25 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Company $company
+     * @return JsonResponse
      */
     public function update(Request $request, Company $company)
     {
-        //
+        try {
+            $company->update($request->all());
+            return new JsonResponse(['data' => 'ok']);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(['data' => 'ko']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Company  $company
+     * @param \App\Company $company
      * @return \Illuminate\Http\Response
      */
     public function destroy(Company $company)

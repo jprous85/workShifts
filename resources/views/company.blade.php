@@ -153,7 +153,8 @@
                             $(function () {
                                 $('#newCompany').modal('toggle');
                             });
-                            this.getData();
+                            this.getData(this.pagination.last_page);
+                            toastr.success('created successfully');
                         }
                     })
                 },
