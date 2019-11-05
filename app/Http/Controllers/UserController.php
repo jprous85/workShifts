@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    /**
+     * Display view for web
+     *
+     * @return mixed
+     */
+    public function view()
+    {
+        return $this->view('user');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
@@ -35,7 +46,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

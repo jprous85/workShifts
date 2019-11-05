@@ -24,8 +24,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <script src="{{ asset('js/custom_app.js') }}"></script>
-
     @if(App::environment('local'))
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @else
@@ -33,7 +31,10 @@
     @endif
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<!-- Fonts -->
+    <script src="{{ asset('js/custom_app.js') }}"></script>
+
+
+    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
@@ -43,6 +44,7 @@
     <div id="app">
         @yield('content')
     </div>
+    @yield('scripts')
 </div>
 </body>
 </html>

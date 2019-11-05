@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -14,7 +17,8 @@ class CompanyController extends Controller
      */
     public function view()
     {
-        return view('company');
+        $user = Auth::user();
+        return view('company', compact('user'));
 
     }
 
@@ -23,9 +27,22 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $company = Company::orderBy('id', 'ASC')->paginate(5);
+        return new JsonResponse([
+            'request' => $request->pages,
+            'paginator' => [
+                'total'         => $company->total(),
+                'current_page'  => $company->currentPage(),
+                'per_page'      => $company->perPage(),
+                'last_page'     => $company->lastPage(),
+                'from'          => $company->firstItem(),
+                'to'            => $company->lastItem(),
 
+            ],
+            'company' => $company
+        ]);
     }
 
     /**
@@ -46,7 +63,12 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Company::create($request->all());
+            return new JsonResponse(['data' => 'ok']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['data' => 'ko']);
+        }
     }
 
     /**
