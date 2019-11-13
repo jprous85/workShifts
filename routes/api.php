@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth:api']], function (){
     Route::get('/company', 'CompanyController@index')->name('company');
     Route::post('/company', 'CompanyController@store')->name('companyStore');
     Route::put('/company/{id}', 'CompanyController@update')->name('companyUpdate');
+    Route::delete('/company/{id}', 'CompanyController@destroy')->name('companyDelete');
 
     Route::get('/user', 'UserController@index')->name('user');
 

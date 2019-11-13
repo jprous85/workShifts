@@ -94,7 +94,7 @@
                     'to': 0
                 },
                 offset: 2,
-                updateCompany: []
+                dataCompany: []
             },
             computed: {
                 isActived: function () {
@@ -140,8 +140,8 @@
                 },
                 updateData() {
                     $('#updateCompanyModal').modal('hide');
-                    let realApiPath = http.origin + "/api" + http.pathname + "/"+this.updateCompany.id+"?api_token=" + '{{ $user->api_token }}';
-                    axios.put(realApiPath, this.updateCompany)
+                    let realApiPath = http.origin + "/api" + http.pathname + "/"+this.dataCompany.id+"?api_token=" + '{{ $user->api_token }}';
+                    axios.put(realApiPath, this.dataCompany)
                         .then(res => {
                             $('#updateCompanyModal').modal('hide');
                             if (res.data.data === "ko") {
@@ -152,13 +152,31 @@
                             }
 
                         });
+                    this.dataCompany = [];
 
+                },
+                deleteData() {
+                    let realApiPath = http.origin + "/api" + http.pathname + "/"+this.dataCompany.id+"?api_token=" + '{{ $user->api_token }}';
+                    axios.delete(realApiPath, this.dataCompany)
+                        .then(res => {
+                            //$('#').modal('hide');
+                            if (res.data.data === "ko") {
+                                toastr.warning('An occurred a problem with update data, please contact with the administrator');
+                            }
+                            else {
+                                toastr.success('Delete successfully');
+                            }
+
+                        });
                 },
                 getDataUpdate: function (e) {
-                    this.updateCompany = e;
+                    this.dataCompany = e;
                     $('#updateCompanyModal').modal('show');
                 },
-
+                getDataDelete: function(e) {
+                    this.dataCompany = e;
+                    $('#updateCompanyModal').modal('show');
+                },
                 changePages: function (pages) {
                     this.pagination.current_page = pages;
                     this.getData(pages);

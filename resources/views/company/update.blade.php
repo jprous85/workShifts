@@ -14,7 +14,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name_company">{{ trans('name') }}</label>
-                        <input type="text" name="name_company" id="name_company" class="form-control" v-model="updateCompany.name">
+                        <input type="text" name="name_company" id="name_company" class="form-control" v-model="dataCompany.name">
                     </div>
                 </div>
                 <div class="modal-footer">
