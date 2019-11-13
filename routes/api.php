@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:api']], function (){
 
     Route::get('/company', 'CompanyController@index')->name('company');
-    Route::post('/company', 'CompanyController@store')->name('company');
+    Route::post('/company', 'CompanyController@store')->name('companyStore');
+    Route::put('/company/{id}', 'CompanyController@update')->name('companyUpdate');
+
     Route::get('/user', 'UserController@index')->name('user');
+
 });

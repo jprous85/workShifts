@@ -3,46 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Company;
-use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Psy\Util\Json;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function view()
     {
         $user = Auth::user();
-        return view('company', compact('user'));
+        return view('company.company', compact('user'));
 
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse
+     * @return array
      */
-    public function index(Request $request)
+    public function index()
     {
+
         $company = Company::orderBy('id', 'ASC')->paginate(5);
-        return new JsonResponse([
-            'request' => $request->pages,
+
+        return [
             'paginator' => [
                 'total' => $company->total(),
                 'current_page' => $company->currentPage(),
                 'per_page' => $company->perPage(),
                 'last_page' => $company->lastPage(),
                 'from' => $company->firstItem(),
-                'to' => $company->lastItem(),
-
+                'to' => $company->lastPage()
             ],
             'company' => $company
-        ]);
+        ];
     }
 
     /**
@@ -59,15 +55,19 @@ class CompanyController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         try {
             Company::create($request->all());
-            return new JsonResponse(['data' => 'ok']);
+            return new JsonResponse([
+                'data' => 'ok'
+            ]);
         } catch (\Exception $e) {
-            return new JsonResponse(['data' => 'ko']);
+            return new JsonResponse([
+                'data' => 'ko'
+            ]);
         }
     }
 
@@ -98,14 +98,15 @@ class CompanyController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Company $company
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, $id)
     {
         try {
-            $company->update($request->all());
-            return new JsonResponse(['data' => 'ok']);
-
+            Company::findOrFail($id)->update($request->all());
+            return new JsonResponse([
+                'data' => 'ok'
+            ]);
         } catch (\Exception $e) {
             return new JsonResponse(['data' => 'ko']);
         }
@@ -115,10 +116,17 @@ class CompanyController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Company $company
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Company $company)
+    public function destroy($id)
     {
-        //
+        try {
+            Company::findOrFail($id)->delete();
+            return new JsonResponse([
+                'data' => 'ok'
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse(['data' => 'ko']);
+        }
     }
 }

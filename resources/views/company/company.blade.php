@@ -9,8 +9,8 @@
                 </div>
                 <div class="float-right">
                     <a href="javascript:void(0)" class="btn btn-outline-primary" data-toggle="modal"
-                       data-target="#newCompany">
-                        {{ trans('new Company') }}
+                       data-target="#companyModal" data-title="{{ trans('newCompany') }}">
+                        {{ trans('newCompany') }}
                     </a>
                 </div>
             </div>
@@ -29,7 +29,9 @@
                             <td>
                                 <input type="button"
                                        value="{{ trans('edit') }}"
-                                       class="btn btn-warning">
+                                       class="btn btn-outline-info"
+                                       @click.prevent="getDataUpdate(d)"
+                                >
                                 <input type="button"
                                        value="{{ trans('delete') }}"
                                        class="btn btn-outline-danger">
@@ -40,15 +42,18 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <li v-if="pagination.current_page > 1" class="page-item">
-                                <a href="#" @click.prevent="changePages(pagination.current_page-1)" class="page-link" ><span>{{ trans('back') }}</span></a>
+                                <a href="#" @click.prevent="changePages(pagination.current_page-1)"
+                                   class="page-link"><span>{{ trans('back') }}</span></a>
                             </li>
-                            <li v-for="page in pagesNumber" v-bind:class="[ page == isActived ? 'active' : '' ]" class="page-item">
-                                <a href="#" @click.prevent="changePages(page)" class="page-link" >
+                            <li v-for="page in pagesNumber" v-bind:class="[ page == isActived ? 'active' : '' ]"
+                                class="page-item">
+                                <a href="#" @click.prevent="changePages(page)" class="page-link">
                                     @{{ page }}
                                 </a>
                             </li>
                             <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                <a href="#" @click.prevent="changePages(pagination.current_page+1)" class="page-link" ><span>{{ trans('next') }}</span></a>
+                                <a href="#" @click.prevent="changePages(pagination.current_page+1)"
+                                   class="page-link"><span>{{ trans('next') }}</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -62,33 +67,9 @@
             </div>
         </div>
 
+        @include('company.create')
+        @include('company.update')
 
-        <!-- Modal -->
-        <div class="modal fade" id="newCompany" tabindex="-1" role="dialog" aria-labelledby="newCompanyLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="newCompanyLabel">{{ trans('new company') }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name_company">{{ trans('name') }}</label>
-                            <input type="text" name="name_company" id="name_company" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                                data-dismiss="modal">{{ trans('close') }}</button>
-                        <button type="button" class="btn btn-primary"
-                                @click="saveData()">{{ trans('save') }}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 
@@ -112,13 +93,14 @@
                     'from': 0,
                     'to': 0
                 },
-                offset: 2
+                offset: 2,
+                updateCompany: []
             },
             computed: {
-                isActived: function() {
+                isActived: function () {
                     return this.pagination.current_page;
                 },
-                pagesNumber: function() {
+                pagesNumber: function () {
                     if (!this.pagination.to) {
                         return [];
                     }
@@ -140,7 +122,7 @@
             },
             methods: {
                 getData(pages) {
-                    axios.get(realApiPath+"&&page="+pages).then(res => {
+                    axios.get(realApiPath + "&&page=" + pages).then(res => {
                         this.company = res.data.company.data;
                         this.pagination = res.data.paginator;
                     })
@@ -150,14 +132,33 @@
                         name: document.getElementById('name_company').value
                     }).then(res => {
                         if (res.data.data === 'ok') {
-                            $(function () {
-                                $('#newCompany').modal('toggle');
-                            });
+                            $('#companyModal').modal('hide');
                             this.getData(this.pagination.last_page);
                             toastr.success('created successfully');
                         }
                     })
                 },
+                updateData() {
+                    $('#updateCompanyModal').modal('hide');
+                    let realApiPath = http.origin + "/api" + http.pathname + "/"+this.updateCompany.id+"?api_token=" + '{{ $user->api_token }}';
+                    axios.put(realApiPath, this.updateCompany)
+                        .then(res => {
+                            $('#updateCompanyModal').modal('hide');
+                            if (res.data.data === "ko") {
+                                toastr.warning('An occurred a problem with update data, please contact with the administrator');
+                            }
+                            else {
+                                toastr.success('Updated successfully');
+                            }
+
+                        });
+
+                },
+                getDataUpdate: function (e) {
+                    this.updateCompany = e;
+                    $('#updateCompanyModal').modal('show');
+                },
+
                 changePages: function (pages) {
                     this.pagination.current_page = pages;
                     this.getData(pages);
@@ -167,6 +168,3 @@
 
     </script>
 @endsection
-
-
-
