@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,10 @@ class CompanyController extends Controller
     {
 
         $company = Company::orderBy('id', 'ASC')->paginate(5);
+
+        foreach ($company as $item) {
+            if ($item->user_id !== NULL) $item->user_id = User::findOrFail($item->user_id)->get()[0];
+        }
 
         return [
             'paginator' => [

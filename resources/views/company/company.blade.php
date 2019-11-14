@@ -20,12 +20,15 @@
                     <table class="table table-striped">
                         <tr>
                             <th>{{ trans('name') }}</th>
+                            <th>{{ trans('user') }}</th>
                             <th>{{ trans('created_at') }}</th>
                             <th>{{ trans('options') }}</th>
                         </tr>
                         <tr v-for="d in company">
                             <td>@{{ d.name }}</td>
-                            <th>@{{ d.created_at }}</th>
+                            <td v-if="d.user_id != null">@{{ d.user_id.name }}</td>
+                            <td v-else>{{ 'null' }}</td>
+                            <td>@{{ d.created_at }}</td>
                             <td>
                                 <input type="button"
                                        value="{{ trans('edit') }}"
@@ -130,6 +133,8 @@
                         this.company = res.data.company.data;
                         this.pagination = res.data.paginator;
                     })
+
+                    console.log(this.company.user_id);
                 },
                 saveData() {
                     axios.post(realApiPath, {

@@ -16,7 +16,13 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->on('users')
+                ->references('id')
+                ->onDelete('cascade');
         });
     }
 
