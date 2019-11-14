@@ -34,7 +34,10 @@
                                 >
                                 <input type="button"
                                        value="{{ trans('delete') }}"
-                                       class="btn btn-outline-danger">
+                                       class="btn btn-outline-danger"
+                                       @click.prevent="getDataDelete(d)"
+
+                                >
                             </td>
                         </tr>
                     </table>
@@ -69,6 +72,7 @@
 
         @include('company.create')
         @include('company.update')
+        @include('company.delete')
 
     </div>
 @endsection
@@ -159,11 +163,13 @@
                     let realApiPath = http.origin + "/api" + http.pathname + "/"+this.dataCompany.id+"?api_token=" + '{{ $user->api_token }}';
                     axios.delete(realApiPath, this.dataCompany)
                         .then(res => {
-                            //$('#').modal('hide');
+                            $('#deleteCompanyModal').modal('hide');
                             if (res.data.data === "ko") {
                                 toastr.warning('An occurred a problem with update data, please contact with the administrator');
                             }
                             else {
+                                this.getData(this.pagination.current_page);
+                                this.dataCompany = [];
                                 toastr.success('Delete successfully');
                             }
 
@@ -175,7 +181,7 @@
                 },
                 getDataDelete: function(e) {
                     this.dataCompany = e;
-                    $('#updateCompanyModal').modal('show');
+                    $('#deleteCompanyModal').modal('show');
                 },
                 changePages: function (pages) {
                     this.pagination.current_page = pages;
